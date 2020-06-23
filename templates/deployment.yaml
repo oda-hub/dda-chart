@@ -23,6 +23,21 @@ spec:
       serviceAccountName: {{ template "chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - name: scratch
+        hostPath:
+          path: /scratch/workers/oda/dda
+          type: DirectoryOrCreate
+      - name: filelogdir
+        hostPath:
+          path: /scratch/workers/oda/dda-logs
+          type: DirectoryOrCreate
+      - name: isdc-arc-rev3
+        hostPath:
+          path: /isdc/arc/rev_3
+      - name: isdc-pvphase-nrt-ops
+        hostPath:
+          path: /isdc/pvphase/nrt/ops
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -59,6 +74,17 @@ spec:
               secretKeyRef:
                 name: dda-interface-token
                 key: token.txt
+          volumeMounts:
+          - mountPath: /scratch
+            name: scratch
+          - mountPath: /var/log/containers
+            name: filelogdir
+          - mountPath: /data/rep_base_prod
+            name: isdc-arc-rev3
+            readOnly: true
+          - mountPath: /data/rep_base_prod_nrt
+            name: isdc-pvphase-nrt-ops
+            readOnly: true
 
                 #          - name: MINIO_KEY
                 #            valueFrom:
