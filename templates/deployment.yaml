@@ -52,6 +52,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+          - name: WORKER_MODE
+            value: interface
           - name: DDA_INTERFACE_TOKEN
             valueFrom:
               secretKeyRef:
