@@ -9,12 +9,12 @@ function create-secrets(){
 
 function install() {
     set -x
-    helm --name ${NAMESPACE:?}-dda-interface --namespace ${NAMESPACE:?} install . --set image.tag="$(cat dda-interface/image-tag)"
+    helm3 install dda-interface --namespace ${NAMESPACE:?}  . --set image.tag="$(cat dda-interface/image-tag)"
 }
 
 function upgrade() {
     set -x
-    helm upgrade ${NAMESPACE:?}-dda-interface . --set image.tag="$(cat dda-interface/image-tag)"
+    helm3 upgrade -n ${NAMESPACE:?} dda-interface . --set image.tag="$(cat dda-interface/image-tag)"
 }
 
 $@

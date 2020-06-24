@@ -74,6 +74,13 @@ spec:
               secretKeyRef:
                 name: dda-interface-token
                 key: token.txt
+          - name: DDA_QUEUE
+            value: "{{ .Values.oda.ddaQueue }}"
+          - name: DQUEUE_DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: dqueue-database-url
+                key: url.txt
           volumeMounts:
           - mountPath: /scratch
             name: scratch
