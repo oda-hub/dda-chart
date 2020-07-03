@@ -38,6 +38,15 @@ spec:
       - name: isdc-pvphase-nrt-ops
         hostPath:
           path: /isdc/pvphase/nrt/ops
+      - name: data-reduced-ddcache
+        hostPath:
+          path: {{ .Values.data.reduced.ddcache }}
+      - name: data-resources
+        hostPath:
+          path: {{ .Values.data.resources }}
+      - name: config-volume 
+        configMap:
+          name: oda-data-config
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -67,6 +76,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+          - name: CURRENT_IC
+            value: /data/rep_base_prod
+          - name: INTEGRAL_DATA
+            value: /data/rep_base_prod
+          - name: REP_BASE_PROD
+            value: /data/rep_base_prod
+          - name: ISDC_REF_CAT
+            value: /data/rep_base_prod/cat/hec/gnrl_refr_cat_0043.fits[1]
+          - name: INTEGRAL_DDCACHE_ROOT
+            value: /data/reduced/ddcache
           - name: WORKER_MODE
             value: interface
           - name: DDA_INTERFACE_TOKEN
@@ -92,6 +111,13 @@ spec:
           - mountPath: /data/rep_base_prod_nrt
             name: isdc-pvphase-nrt-ops
             readOnly: true
+          - mountPath: /data/resources
+            name: data-resources
+          - mountPath: /data/reduced/ddcache
+            name: data-reduced-ddcache
+          - name: config-volume
+            mountPath: /etc/passwd
+            subPath: etc-passwd
 
                 #          - name: MINIO_KEY
                 #            valueFrom:
