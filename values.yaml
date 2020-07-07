@@ -3,12 +3,12 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-replicaCountPassive: 1
+replicaCountPassive: 2
 
 environment: staging-1-3
 
 image:
-  repository: odahub/dda-interface
+  repository: odahub/dda
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -48,10 +48,10 @@ ingress:
   hosts:
   - host: in.internal.odahub.io
     paths:
-    - /staging-1.3/dda-interface(/|$)(.*) # set environment from elsewhere
+    - /staging-1.3/dda(/|$)(.*) # set environment from elsewhere
   - host: in.odahub.io
     paths:
-    - /staging-1.3/dda-interface(/|$)(.*)
+    - /staging-1.3/dda(/|$)(.*)
 
   tls: []
   #  - secretName: chart-example-tls
