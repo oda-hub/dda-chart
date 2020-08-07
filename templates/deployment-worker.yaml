@@ -81,7 +81,7 @@ spec:
             exec:
               command:
               - ls
-              - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits
+              - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 15 

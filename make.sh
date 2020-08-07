@@ -11,7 +11,7 @@ function create-secrets(){
 
 function install() {
     set -x
-    helm install dda --namespace ${NAMESPACE:?}  . --set image.tag="$(cat dda-interface/image-tag)"
+    helm install dda --namespace ${NAMESPACE:?}  . --set image.tag="$(cat dda/image-tag)"
 }
 
 function upgrade() {
