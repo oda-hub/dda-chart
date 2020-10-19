@@ -91,6 +91,8 @@ spec:
             value: /data/rep_base_prod
           - name: REP_BASE_PROD
             value: /data/rep_base_prod
+          - name: REP_BASE_PROD_NRT
+            value: /data/rep_base_prod_nrt
           - name: ISDC_REF_CAT
             value: /data/rep_base_prod/cat/hec/gnrl_refr_cat_0043.fits[1]
           - name: INTEGRAL_DDCACHE_ROOT
@@ -102,13 +104,15 @@ spec:
               secretKeyRef:
                 name: dda-interface-token
                 key: token.txt
-          - name: DDA_QUEUE
-            value: "{{ .Values.oda.ddaQueue }}"
-          - name: DQUEUE_DATABASE_URL
+          - name: ODAHUB
+            value: "https://dqueue.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
+          - name: DDA_QUEUE 
+            value: "https://dqueue.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
+          - name: DDA_TOKEN
             valueFrom:
               secretKeyRef:
-                name: dqueue-database-url
-                key: url.txt
+                name: dda-token
+                key: dda-token
           volumeMounts:
           - mountPath: /scratch
             name: scratch

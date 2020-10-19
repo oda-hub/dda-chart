@@ -1,3 +1,5 @@
+export NAMESPACE=${NAMESPACE:-staging-1-3}
+
 function create-secrets(){
      echo
     kubectl -n staging-1-3 create secret generic dda-interface-token  --from-file=./private/token.txt
