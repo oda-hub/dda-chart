@@ -26,24 +26,24 @@ spec:
       volumes:
       - name: scratch
         hostPath:
-          path: /scratch/workers/oda/dda
+          path: {{ .Values.oda.worker_scratch }}/dda
           type: DirectoryOrCreate
       - name: filelogdir
         hostPath:
-          path: /scratch/workers/oda/dda-logs
+          path: {{ .Values.oda.worker_scratch }}/dda-logs
           type: DirectoryOrCreate
       - name: isdc-arc-rev3
         hostPath:
-          path: /isdc/arc/rev_3
+          path: {{ .Values.oda.isdc_mirror }}/arc/rev_3
       - name: isdc-pvphase-nrt-ops
         hostPath:
-          path: /isdc/pvphase/nrt/ops
+          path: {{ .Values.oda.isdc_mirror }}/pvphase/nrt/ops
       - name: data-reduced-ddcache
         hostPath:
-          path: {{ .Values.data.reduced.ddcache }}
+          path: {{ .Values.oda.ddcache }}
       - name: data-resources
         hostPath:
-          path: {{ .Values.data.resources }}
+          path: {{ .Values.oda.resources }}
       - name: config-volume 
         configMap:
           name: oda-data-config
