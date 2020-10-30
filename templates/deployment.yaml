@@ -35,6 +35,9 @@ spec:
       - name: isdc-arc-rev3
         hostPath:
           path: /isdc/arc/rev_3
+      - name: ic-collection
+        hostPath:
+          path: /unsaved/astro/savchenk/osa11/ic-collection
       - name: isdc-pvphase-nrt-ops
         hostPath:
           path: /isdc/pvphase/nrt/ops
@@ -87,6 +90,8 @@ spec:
           env:
           - name: CURRENT_IC
             value: /data/rep_base_prod
+          - name: IC_COLLECTION
+            value: /data/ic_collection
           - name: INTEGRAL_DATA
             value: /data/rep_base_prod
           - name: REP_BASE_PROD
@@ -118,6 +123,8 @@ spec:
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
+          - mountPath: /data/ic_collection
+            name: ic-collection
           - mountPath: /data/rep_base_prod
             name: isdc-arc-rev3
             readOnly: true
