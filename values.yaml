@@ -20,7 +20,7 @@ oda:
 replicaCount: 1
 
 # passive workers, reserving resources for  realtime processing
-replicaCountPassive: 0
+replicaCountPassive: 2
 
 image:
   repository: odahub/dda
