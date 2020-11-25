@@ -16,11 +16,15 @@ oda:
   # needs to be shared (mounted or mirrored) between pods
   ic_collection_mirror: /unsaved/astro/savchenk/osa11/ic-collection
 
+  ddcache: /net/cdcicn02/scratch/shared/savchenk/data/reduced/ddcache
+
+  resources: /net/cdcicn02/scratch/shared/savchenk/data/resources
+
 # service itself
 replicaCount: 1
 
 # passive workers, reserving resources for  realtime processing
-replicaCountPassive: 2
+replicaCountPassive: 0
 
 image:
   repository: odahub/dda

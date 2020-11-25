@@ -128,6 +128,9 @@ spec:
           - mountPath: /data/rep_base_prod
             name: isdc-arc-rev3
             readOnly: true
+          - mountPath: /isdc/arc/rev_3
+            name: isdc-arc-rev3
+            readOnly: true
           - mountPath: /data/rep_base_prod_nrt
             name: isdc-pvphase-nrt-ops
             readOnly: true
