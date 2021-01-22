@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 oda:
-  ddaQueue: queue-osa11
+  ddaQueue: default
   # location for individual worker scratch 
   # can be any temporary directory. even inside container
   worker_scratch: /scratch/workers/oda/
