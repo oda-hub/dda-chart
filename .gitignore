@@ -1,2 +1,6 @@
 private
 dqueue
+tmp_response_*
+*.swp
+*.gpg
+data
