@@ -24,6 +24,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
+    {{ if (default .Values.oda.use_hostpath false) }}
       - name: scratch
         hostPath:
           path: {{ .Values.oda.worker_scratch }}/dda
@@ -47,6 +48,23 @@ spec:
       - name: data-resources
         hostPath:
           path: {{ .Values.oda.resources }}
+    {{ else }}
+      - name: scratch
+        persistentVolumeClaim:
+          claimName: dda-interface-scratch
+      - name: filelogdir
+        persistentVolumeClaim:
+          claimName: dda-filelogdir
+      - name: data-reduced-ddcache
+        persistentVolumeClaim:
+          claimName: data-reduced-ddcache
+      - name: data-resources
+        persistentVolumeClaim:
+          claimName: data-resources
+      #- name: isdc-arc-rev3
+      #- name: ic-collection
+      #- name: isdc-pvphase-nrt-ops
+    {{ end }}
       - name: config-volume 
         configMap:
           name: oda-data-config
@@ -123,6 +141,8 @@ spec:
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
+
+          {{ if (default .Values.oda.use_hostpath false) }}
           - mountPath: /data/ic_collection
             name: ic-collection
           - mountPath: /data/rep_base_prod
@@ -134,6 +154,8 @@ spec:
           - mountPath: /data/rep_base_prod_nrt
             name: isdc-pvphase-nrt-ops
             readOnly: true
+          {{ end }}
+
           - mountPath: /data/resources
             name: data-resources
           - mountPath: /data/reduced/ddcache

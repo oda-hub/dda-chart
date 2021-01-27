@@ -1,0 +1,49 @@
+{{ if (default .Values.oda.use_hostpath false) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dda-interface-scratch
+spec:
+  storageClassName: {{ .Values.storage_class }} 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 30Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dda-filelogdir
+spec:
+  storageClassName: {{ .Values.storage_class }} 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 30Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-resources
+spec:
+  storageClassName: {{ .Values.storage_class }} 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 30Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-reduced-ddcache
+spec:
+  storageClassName: {{ .Values.storage_class }} 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 30Gi
+{{ end }}
