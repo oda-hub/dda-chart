@@ -131,6 +131,8 @@ spec:
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
           - name: DDA_QUEUE 
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
+          - name: MIMIC_DDA_GIT_CLONE
+            value: "yes"
           - name: DDA_TOKEN
             valueFrom:
               secretKeyRef:
