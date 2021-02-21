@@ -1,4 +1,4 @@
-{{ if (default .Values.oda.use_hostpath false) }}
+{{ if not (default false .Values.oda.use_hostpath) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
