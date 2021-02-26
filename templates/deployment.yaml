@@ -24,7 +24,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-    {{ if (default .Values.oda.use_hostpath false) }}
+    {{ if (default false .Values.oda.use_hostpath) }}
       - name: scratch
         hostPath:
           path: {{ .Values.oda.worker_scratch }}/dda
@@ -144,7 +144,7 @@ spec:
           - mountPath: /var/log/containers
             name: filelogdir
 
-          {{ if (default .Values.oda.use_hostpath false) }}
+          {{ if (default false .Values.oda.use_hostpath) }}
           - mountPath: /data/ic_collection
             name: ic-collection
           - mountPath: /data/rep_base_prod
