@@ -94,11 +94,11 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 10
-          readinessProbe:
-            exec:
-              command:
-              - ls
-              - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
+          #readinessProbe:
+            #exec:
+              #command:
+              #- ls
+              #- /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 15 
@@ -138,6 +138,7 @@ spec:
               secretKeyRef:
                 name: dda-token
                 key: dda-token
+                optional: true
           volumeMounts:
           - mountPath: /scratch
             name: scratch
