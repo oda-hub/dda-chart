@@ -94,11 +94,13 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 10
-          #readinessProbe:
-            #exec:
-              #command:
-              #- ls
-              #- /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
+          {{- if (default false .Values.oda.use_hostpath) }} 
+          readinessProbe:
+            exec:
+              command:
+              - ls
+              - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
+          {{- end }}    
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 15 
