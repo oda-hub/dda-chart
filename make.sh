@@ -2,7 +2,7 @@ export NAMESPACE=${NAMESPACE:-staging-1-3}
 
 function create-secrets(){
      echo
-    kubectl -n staging-1-3 create secret generic dda-interface-token  --from-file=./private/token.txt
+    kubectl -n ${NAMESPACE:?} create secret generic dda-interface-token  --from-file=./private/token.txt
 
 #    kubectl create secret generic odatests-tests-bot-password  --from-file=./private/testbot-password.txt
 #    kubectl create secret generic odatests-secret-key  --from-file=./private/secret-key.txt
