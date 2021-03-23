@@ -4,3 +4,4 @@ tmp_response_*
 *.swp
 *.gpg
 data
+values-*.yaml
