@@ -124,15 +124,30 @@ spec:
             value: /data/reduced/ddcache
           - name: WORKER_MODE
             value: interface
+
           - name: DDA_INTERFACE_TOKEN
             valueFrom:
               secretKeyRef:
                 name: dda-interface-token
                 key: token.txt
+
+          {{ if .Values.dda_disable_async }}
+          - name: DDA_DISABLE_ASYNC
+            value: "yes"
+          {{ else }}
           - name: ODAHUB
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
           - name: DDA_QUEUE 
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
+          {{ end }}
+
+          - name: DDA_BOOTSTRAP_DATA
+          {{ if .Values.dda_bootstrap_data }}
+            value: "yes"
+          {{ else }}
+            value: "no"
+          {{ end }}
+
           - name: MIMIC_DDA_GIT_CLONE
             value: "yes"
           - name: DDA_TOKEN
