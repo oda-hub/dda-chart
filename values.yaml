@@ -91,3 +91,26 @@ tolerations: []
 
 affinity: {}
 
+
+allocate_volumes:
+  - name: data-resources
+    size: 1G
+
+  - name: data-reduced-ddcache
+    size: 30G
+    access_mode: ReadWriteMany # example, not currently needed
+
+  - name: isdc-arc-rev3
+    size: 30G
+
+  - name: ic-collection
+    size: 10G
+
+  - name: isdc-pvphase-nrt-ops
+    size: 10G
+  
+  - name: dda-interface-scratch
+    size: 40G
+  
+  - name: dda-filelogdir
+    size: 5G
