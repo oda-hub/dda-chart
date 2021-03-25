@@ -24,7 +24,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-    {{ if (default .Values.oda.use_hostpath false) }}
+    {{ if (default false .Values.oda.use_hostpath) }}
       - name: scratch
         hostPath:
           path: {{ .Values.oda.worker_scratch }}/dda
@@ -94,11 +94,13 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 10
+          {{- if (default false .Values.oda.use_hostpath) }} 
           readinessProbe:
             exec:
               command:
               - ls
               - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
+          {{- end }}    
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 15 
@@ -138,13 +140,14 @@ spec:
               secretKeyRef:
                 name: dda-token
                 key: dda-token
+                optional: true
           volumeMounts:
           - mountPath: /scratch
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
 
-          {{ if (default .Values.oda.use_hostpath false) }}
+          {{ if (default false .Values.oda.use_hostpath) }}
           - mountPath: /data/ic_collection
             name: ic-collection
           - mountPath: /data/rep_base_prod
