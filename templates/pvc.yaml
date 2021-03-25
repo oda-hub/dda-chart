@@ -1,28 +1,4 @@
-{{ if (default false .Values.oda.use_hostpath) }}
-{{ else }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: dda-interface-scratch
-spec:
-  storageClassName: {{ .Values.storage_class_rwmany }} 
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 30Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: dda-filelogdir
-spec:
-  storageClassName: {{ .Values.storage_class_rwmany }} 
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 30Gi
+{{ if not (default false .Values.oda.use_hostpath) }}
 
 {{- $root := . -}}
 {{ range .Values.allocate_volumes }}

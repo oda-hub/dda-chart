@@ -98,7 +98,7 @@ allocate_volumes:
 
   - name: data-reduced-ddcache
     size: 30G
-    access_mode: ReadWriteMany
+    access_mode: ReadWriteMany # example, not currently needed
 
   - name: isdc-arc-rev3
     size: 30G
@@ -108,3 +108,6 @@ allocate_volumes:
 
   - name: isdc-pvphase-nrt-ops
     size: 10G
+  
+  - name: dda-interface-scratch
+    size: 40G

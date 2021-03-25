@@ -24,7 +24,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-    {{ if (default .Values.use_hostpath false) }}
+    {{ if (default false .Values.oda.use_hostpath) }}
       - name: scratch
         hostPath:
           path: {{ .Values.oda.worker_scratch }}/dda
@@ -102,7 +102,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 10
-          {{ if (default false .Values.use_hostpath) }}
+          {{- if (default false .Values.oda.use_hostpath) }} 
           readinessProbe:
             exec:
               command:
@@ -112,7 +112,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 15 
             timeoutSeconds: 30
-          {{ end }}
+          {{- end }}    
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -176,7 +176,6 @@ spec:
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
-
           - mountPath: /data/ic_collection
             name: ic-collection
           - mountPath: /data/rep_base_prod
@@ -197,27 +196,14 @@ spec:
 
           - mountPath: /data/resources
             name: data-resources
+
           - mountPath: /data/reduced/ddcache
             name: data-reduced-ddcache
+
           - name: config-volume
             mountPath: /etc/passwd
             subPath: etc-passwd
 
-                #          - name: MINIO_KEY
-                #            valueFrom:
-                #                secretKeyRef:
-                #                  name: minio-key
-                #                  key: minio-key.txt
-                #          - name: JENA_PASSWORD
-                #            valueFrom:
-                #                secretKeyRef:
-                #                  name: jena-password
-                #                  key: jena-password.txt
-                #          - name: LOGSTASH_ENTRYPOINT
-                #            valueFrom:
-                #                secretKeyRef:
-                #                  name: logstash-entrypoint
-                #  key: logstash-entrypoint.txt
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

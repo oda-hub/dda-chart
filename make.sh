@@ -7,12 +7,6 @@ function create-secrets(){
 
      kubectl -n $ODA_NAMESPACE delete secret dda-interface-token || echo ok
      kubectl -n $ODA_NAMESPACE create secret generic dda-interface-token  --from-file=./private/token.txt
-
-#    kubectl create secret generic odatests-tests-bot-password  --from-file=./private/testbot-password.txt
-#    kubectl create secret generic odatests-secret-key  --from-file=./private/secret-key.txt
-#    kubectl create secret generic minio-key  --from-file=./private/minio-key.txt
-#    kubectl create secret generic jena-password  --from-file=./private/jena-password.txt
-#    kubectl create secret generic logstash-entrypoint  --from-file=./private/logstash-entrypoint.txt
 }
 
 function install() {
