@@ -61,9 +61,17 @@ spec:
       - name: data-resources
         persistentVolumeClaim:
           claimName: data-resources
-      #- name: isdc-arc-rev3
-      #- name: ic-collection
-      #- name: isdc-pvphase-nrt-ops
+
+      # these will be populated with archive since it is not mounted
+      - name: isdc-arc-rev3
+        persistentVolumeClaim:
+          claimName: isdc-arc-rev3
+      - name: ic-collection
+        persistentVolumeClaim:
+          claimName: ic-collection
+      - name: isdc-pvphase-nrt-ops
+        persistentVolumeClaim:
+          claimName: isdc-pvphase-nrt-ops
     {{ end }}
       - name: config-volume 
         configMap:
@@ -82,10 +90,10 @@ spec:
             httpGet:
               path: /
               port: http
-            failureThreshold: 5
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 30
+            failureThreshold: 10
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 60
           readinessProbe:
             httpGet:
               path: /
@@ -139,6 +147,11 @@ spec:
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
           - name: DDA_QUEUE 
             value: "https://crux.staging-1-3.odahub.io@{{ .Values.oda.ddaQueue }}"
+          - name: DDA_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: dda-token
+                key: dda-token
           {{ end }}
 
           - name: DDA_BOOTSTRAP_DATA
@@ -147,31 +160,38 @@ spec:
           {{ else }}
             value: "no"
           {{ end }}
+          
+          - name: DDOSA_SCWDATA_DOWNLOAD
+          {{ if .Values.ddosa_scwdata_download }}
+            value: "yes"
+          {{ else }}
+            value: "no"
+          {{ end }}
 
           - name: MIMIC_DDA_GIT_CLONE
             value: "yes"
-          - name: DDA_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: dda-token
-                key: dda-token
+
           volumeMounts:
           - mountPath: /scratch
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
 
-          {{ if (default false .Values.use_hostpath) }}
           - mountPath: /data/ic_collection
             name: ic-collection
           - mountPath: /data/rep_base_prod
             name: isdc-arc-rev3
+          {{ if ( default false .Values.archive_readonly ) }}
             readOnly: true
+          {{ end }}
           - mountPath: /isdc/arc/rev_3
             name: isdc-arc-rev3
+          {{ if ( default false .Values.archive_readonly ) }}
             readOnly: true
+          {{ end }}
           - mountPath: /data/rep_base_prod_nrt
             name: isdc-pvphase-nrt-ops
+          {{ if ( default false .Values.archive_readonly ) }}
             readOnly: true
           {{ end }}
 

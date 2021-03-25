@@ -91,3 +91,20 @@ tolerations: []
 
 affinity: {}
 
+
+allocate_volumes:
+  - name: data-resources
+    size: 1G
+
+  - name: data-reduced-ddcache
+    size: 30G
+    access_mode: ReadWriteMany
+
+  - name: isdc-arc-rev3
+    size: 30G
+
+  - name: ic-collection
+    size: 10G
+
+  - name: isdc-pvphase-nrt-ops
+    size: 10G
