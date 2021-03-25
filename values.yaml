@@ -111,3 +111,6 @@ allocate_volumes:
   
   - name: dda-interface-scratch
     size: 40G
+  
+  - name: dda-filelogdir
+    size: 5G
