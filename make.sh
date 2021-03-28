@@ -1,9 +1,9 @@
-export ODA_NAMESPACE=${ODA_NAMESPACE:-staging-1-3}
+export ODA_NAMESPACE=${ODA_NAMESPACE:-oda-staging}
 
 function create-secrets(){
      set -x
 
-     echo -e "\033[33mcreating secrets for dda in $ODA_NAMESPACE\033[0m"
+     echo -e "\033[33mcreating secrets for dda in ${ODA_NAMESPACE}\033[0m"
 
      kubectl -n $ODA_NAMESPACE delete secret dda-interface-token || echo ok
      kubectl -n $ODA_NAMESPACE create secret generic dda-interface-token  --from-file=./private/token.txt
