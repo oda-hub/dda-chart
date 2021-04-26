@@ -29,7 +29,7 @@ replicaCountPassive: 0
 image:
   repository: odahub/dda
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
