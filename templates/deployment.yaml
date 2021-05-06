@@ -135,7 +135,7 @@ spec:
           - name: REP_BASE_PROD_NRT
             value: /data/rep_base_prod_nrt
           - name: ISDC_REF_CAT
-            value: /data/rep_base_prod/cat/hec/gnrl_refr_cat_0043.fits[1]
+            value: /data/arc/rev_3/cat/hec/gnrl_refr_cat_0043.fits[1]
           - name: INTEGRAL_DDCACHE_ROOT
             value: /data/reduced/ddcache
           - name: WORKER_MODE

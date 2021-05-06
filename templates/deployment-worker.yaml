@@ -132,9 +132,6 @@ spec:
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
-          - mountPath: /data/arc/rev_3
-            name: isdc-arc-rev3
-            readOnly: true
           - mountPath: /isdc/arc/rev_3
             name: isdc-arc-rev3
             readOnly: true
