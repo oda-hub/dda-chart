@@ -3,7 +3,12 @@
 # Declare variables to be passed into your templates.
 
 oda:
+  use_hostpath: true
+
+  crux: http://crux.staging-1-3.internal.odahub.io@default
+
   ddaQueue: default
+
   # location for individual worker scratch 
   # can be any temporary directory. even inside container
   worker_scratch: /scratch/workers/oda/
@@ -14,11 +19,11 @@ oda:
 
   # location of semi-persistent data
   # needs to be shared (mounted or mirrored) between pods
-  ic_collection_mirror: /unsaved/astro/savchenk/osa11/ic-collection
+  ic_collection_mirror: 
 
-  ddcache: /net/cdcicn02/scratch/shared/savchenk/data/reduced/ddcache
+  ddcache: 
 
-  resources: /net/cdcicn02/scratch/shared/savchenk/data/resources
+  resources: 
 
 # service itself
 replicaCount: 1
@@ -114,3 +119,4 @@ allocate_volumes:
   
   - name: dda-filelogdir
     size: 5G
+

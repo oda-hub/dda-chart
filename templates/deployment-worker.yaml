@@ -64,7 +64,7 @@ spec:
             exec:
               command:
               - ls
-              - /data/rep_base_prod/ic
+              - /data/arc/rev_3/ic
                   #              - df
                   #              - /
             failureThreshold: 5
@@ -84,7 +84,7 @@ spec:
             exec:
               command:
               - ls
-              - /data/rep_base_prod/aux/adp/2042.001/time_correlation.fits.gz
+              - /data/arc/rev_3/aux/adp/2042.001/time_correlation.fits.gz
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 15 
@@ -100,10 +100,9 @@ spec:
                 name: dda-interface-token
                 key: token.txt
           - name: ODAHUB 
-            value: "http://dqueue.staging-1-3.internal.odahub.io@{{ .Values.oda.ddaQueue }}"
+            value: "{{ .Values.oda.crux }}"
           - name: DDA_QUEUE
-            value: "http://dqueue.staging-1-3.internal.odahub.io@{{ .Values.oda.ddaQueue }}"
-            #value: "http://in.internal.odahub.io/staging-1-3/dqueue@{{ .Values.oda.ddaQueue }}"
+            value: "{{ .Values.oda.crux }}"
           - name: DQUEUE_DATABASE_URL
             valueFrom:
               secretKeyRef:
@@ -115,17 +114,17 @@ spec:
                 name: dda-token
                 key: dda-token
           - name: CURRENT_IC
-            value: /data/rep_base_prod
+            value: /data/arc/rev_3
           - name: IC_COLLECTION
             value: /data/ic_collection
           - name: INTEGRAL_DATA
-            value: /data/rep_base_prod
+            value: /data/arc/rev_3
           - name: REP_BASE_PROD
-            value: /data/rep_base_prod
+            value: /data/arc/rev_3
           - name: REP_BASE_PROD_NRT
             value: /data/rep_base_prod_nrt
           - name: ISDC_REF_CAT
-            value: /data/rep_base_prod/cat/hec/gnrl_refr_cat_0043.fits[1]
+            value: /data/arc/rev_3/cat/hec/gnrl_refr_cat_0043.fits[1]
           - name: INTEGRAL_DDCACHE_ROOT
             value: /data/reduced/ddcache
           volumeMounts:
@@ -133,7 +132,7 @@ spec:
             name: scratch
           - mountPath: /var/log/containers
             name: filelogdir
-          - mountPath: /data/rep_base_prod
+          - mountPath: /data/arc/rev_3
             name: isdc-arc-rev3
             readOnly: true
           - mountPath: /isdc/arc/rev_3
