@@ -1,4 +1,4 @@
-{{ if not (default false .Values.oda.use_hostpath) }}
+{{ if not (default false .Values.oda.use_hostpath)  }}
 
 {{- $root := . -}}
 {{ range .Values.allocate_volumes }}

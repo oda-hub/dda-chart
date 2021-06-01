@@ -54,3 +54,12 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+
+{{- define "archive_mount_options" -}}
+{{- if or ( default true .Values.oda.archive_readonly ) .Values.oda.mount_isdc }}
+readOnly: true
+{{- else }}
+readOnly: false
+{{- end -}}
+{{- end -}}

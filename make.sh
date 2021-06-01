@@ -19,8 +19,8 @@ function upgrade() {
         -f values-${ODA_SITE}.yaml \
         --set image.tag="$(cd dda; git describe --always)" \
         --set securityContext.runAsUser=5182 \
-        --set securityContext.runAsGroup=4915
-        #--set securityContext.runAsGroup=4700
+        --set securityContext.runAsGroup=4700
+        #--set securityContext.runAsGroup=4915
 }
 
 $@
