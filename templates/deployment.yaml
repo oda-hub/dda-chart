@@ -55,12 +55,15 @@ spec:
         hostPath:
           path: {{ .Values.oda.resources }}
     {{ else }}
+
+    {{ if ( default false .Values.oda.create_scratch ) }}
       - name: scratch
         persistentVolumeClaim:
           claimName: dda-{{ $worker_mode }}-scratch
       - name: filelogdir
         persistentVolumeClaim:
           claimName: dda-filelogdir
+    {{ end }}
 
     {{ if ( default false .Values.oda.mount_isdc ) }}
       - name: isdc-arc-rev3
@@ -110,6 +113,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if eq $worker_mode "interface" }}
           ports:
             - name: http
               containerPort: 8000
@@ -130,6 +134,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 10
+          {{- end }}
           {{- if or (default false .Values.oda.use_hostpath) .Values.oda.mount_isdc }} 
           readinessProbe:
             exec:
@@ -166,6 +171,11 @@ spec:
               secretKeyRef:
                 name: dda-interface-token
                 key: token.txt
+    
+          {{ if not ( default false .Values.oda.create_scratch ) }}
+          - name: SCRATCH_BASE
+            value: "/tmp"
+          {{ end }}
 
           {{ if .Values.dda_disable_async }}
           - name: DDA_DISABLE_ASYNC
@@ -200,11 +210,13 @@ spec:
             value: "yes"
 
           volumeMounts:
+          {{ if ( default false .Values.oda.create_scratch ) }}
           - mountPath: /scratch
             name: scratch
 
           - mountPath: /var/log/containers
             name: filelogdir
+          {{ end }}
 
           - mountPath: /data/ic_collection
             name: ic-collection
