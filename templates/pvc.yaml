@@ -24,3 +24,76 @@ spec:
 
 
 {{ end }}
+
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-isilon-astro-integral{{ .Values.pv_suffix }}
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity:
+    storage: 2Gi
+  mountOptions:
+  - vers=3
+  - nolock
+  nfs:
+    path: {{ .Values.isdc_astro.path_prefix }}
+    server: {{ .Values.isdc_astro.nfs_server }}
+    readOnly: true    
+  persistentVolumeReclaimPolicy: Retain
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-isilon-astro-integral{{ .Values.pv_suffix }}
+  # namespace: foo
+spec:
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: pv-isilon-astro-integral{{ .Values.pv_suffix }}
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-isilon-verso-integral{{ .Values.pv_suffix }}
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity:
+    storage: 2Gi
+  mountOptions:
+  - vers=3
+  - nolock
+  nfs:
+    path: {{ .Values.isdc_verso.path_prefix }}
+    server: {{ .Values.isdc_verso.nfs_server }}
+    readOnly: true    
+  persistentVolumeReclaimPolicy: Retain
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-isilon-verso-integral{{ .Values.pv_suffix }}
+  # namespace: foo
+spec:
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: pv-isilon-verso-integral{{ .Values.pv_suffix }}
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 2Gi

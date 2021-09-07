@@ -66,31 +66,12 @@ spec:
     {{ end }}
 
     {{ if ( default false .Values.oda.mount_isdc ) }}
-      - name: isdc-arc-rev3
-        nfs:
-          server: {{ .Values.isdc.nfs_server }}
-          path: {{ .Values.isdc.path_prefix }}/{{ .Values.isdc.paths.rev_3 }}
-          readOnly: true
-      - name: isdc-pvphase-nrt-ops
-        nfs:
-          server: {{ .Values.isdc.nfs_server }}
-          path: {{ .Values.isdc.path_prefix }}/{{ .Values.isdc.paths.pvphase_nrt_ops }}
-          readOnly: true
-      - name: ic-collection
-        nfs:
-          server: {{ .Values.isdc.nfs_server }}
-          path: {{ .Values.isdc.path_prefix }}/{{ .Values.isdc.paths.ic_collection }}
-          readOnly: true
-      - name: data-reduced-ddcache
-        nfs:
-          server: {{ .Values.isdc.nfs_server }}
-          path: {{ .Values.isdc.path_prefix }}/{{ .Values.isdc.paths.data_reduced_ddcache }}
-          readOnly: false
-      - name: data-resources
-        nfs:
-          server: {{ .Values.isdc.nfs_server }}
-          path: {{ .Values.isdc.path_prefix }}/{{ .Values.isdc.paths.data_resources }}
-          readOnly: false
+      - name: isilon-astro-integral
+        persistentVolumeClaim:
+          claimName: pvc-isilon-astro-integral{{ .Values.pv_suffix }}
+      - name: isilon-verso-integral
+        persistentVolumeClaim:
+          claimName: pvc-isilon-verso-integral{{ .Values.pv_suffix }}
     {{ else }}
       # these will be populated with archive since it is not mounted
       - name: isdc-arc-rev3
@@ -219,31 +200,38 @@ spec:
           {{ end }}
 
           - mountPath: /data/ic_collection
-            name: ic-collection
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.ic_collection }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/arc/rev_3
-            name: isdc-arc-rev3
+            name: isilon-verso-integral
+            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/rep_base_prod
-            name: isdc-arc-rev3
+            name: isilon-verso-integral
+            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /isdc/arc/rev_3
-            name: isdc-arc-rev3
+            name: isilon-verso-integral
+            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/rep_base_prod_nrt
-            name: isdc-pvphase-nrt-ops
+            name: isilon-verso-integral
+            subPath: {{ .Values.isdc_verso.paths.pvphase_nrt_ops }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/resources
-            name: data-resources
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.data_resources }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/reduced/ddcache
-            name: data-reduced-ddcache
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.data_reduced_ddcache }}
 
           - name: config-volume
             mountPath: /etc/passwd
