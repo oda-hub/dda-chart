@@ -84,10 +84,12 @@ spec:
         persistentVolumeClaim:
           claimName: ic-collection
     {{ end }}
+
     {{ end }}
       - name: config-volume 
         configMap:
           name: oda-data-config
+      priorityClassName: {{ include "chart.fullname" . }}-{{ $worker_mode }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

@@ -65,17 +65,17 @@ service:
 
 ingress:
   enabled: true
-  annotations: #{}
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    kubernetes.io/ingress.class: nginx
+  annotations: {}
+  # nginx.ingress.kubernetes.io/rewrite-target: /$2
+  #  kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-  - host: in.internal.odahub.io
-    paths:
-    - /staging-1.3/dda(/|$)(.*) # set environment from elsewhere
-  - host: in.odahub.io
-    paths:
-    - /staging-1.3/dda(/|$)(.*)
+  hosts: []
+  #- host: in.internal.odahub.io
+  #  paths:
+  #  - /staging-1.3/dda(/|$)(.*) # set environment from elsewhere
+  #- host: in.odahub.io
+  #  paths:
+  #  - /staging-1.3/dda(/|$)(.*)
 
   tls: []
   #  - secretName: chart-example-tls
