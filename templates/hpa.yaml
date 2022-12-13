@@ -1,3 +1,5 @@
+{{ if (default false .Values.oda.passive_hpa) }}
+
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -10,7 +12,7 @@ spec:
     kind: Deployment
     name: oda-dda-passive
   minReplicas: 1
-  maxReplicas: 30
+  maxReplicas: 1
   metrics:
   - type: External
     external:
@@ -39,3 +41,5 @@ spec:
         value: 4
         periodSeconds: 5
       selectPolicy: Max
+
+{{ end }}

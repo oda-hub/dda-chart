@@ -16,6 +16,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "chart.name" . }}-{{ $worker_mode }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -155,10 +157,16 @@ spec:
                 name: dda-interface-token
                 key: token.txt
     
-          {{ if not ( default false .Values.oda.create_scratch ) }}
+          {{ if ( default false .Values.oda.create_scratch ) }}
+          - name: SCRATCH_BASE
+            value: "/"
+          {{ else }}
           - name: SCRATCH_BASE
             value: "/tmp"
           {{ end }}
+
+          - name: ODA_DISABLE_DATALAKE
+            value: "yes"
 
           {{ if .Values.dda_disable_async }}
           - name: DDA_DISABLE_ASYNC

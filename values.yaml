@@ -50,14 +50,14 @@ serviceAccount:
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: #{}
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
   #readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
+  #runAsNonRoot: true
+  #runAsUser: 1000
+  #runAsGroup: 1000
 
 service:
   type: ClusterIP
