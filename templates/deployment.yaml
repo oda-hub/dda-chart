@@ -1,6 +1,6 @@
 
 {{- $root := . -}}
-{{ range $worker_mode := tuple "interface" "passive" }}
+{{ range $worker_mode := tuple "interface" }}
 {{- with $root -}}
 
 ---
@@ -246,6 +246,60 @@ spec:
           - name: config-volume
             mountPath: /etc/passwd
             subPath: etc-passwd
+
+
+
+
+        - name: {{ .Chart.Name }}-cleaner
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["bash"]
+          args:
+          - "-c"
+          - |
+            set -x
+            while true; do
+              date
+              df -h /scratch
+              find /scratch -name poke -cmin +10 -type f -exec rm -rfv '{}' \;
+              find /scratch -size +10M -cmin +10 -type f -exec rm -fv '{}' \;
+              find /scratch -size +1k -cmin +600 -type f -exec rm -fv '{}' \;
+              sleep 60
+            done
+
+          ports: []
+          livenessProbe:
+            exec:
+              command:
+              - df
+              - -h
+              - /scratch
+            failureThreshold: 5
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 30
+
+          readinessProbe:
+            exec:
+              command:
+              - df
+              - -h
+              - /scratch
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 10
+
+          volumeMounts:
+          - mountPath: /scratch
+            name: scratch
+
+
+
+
+
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
