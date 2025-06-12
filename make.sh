@@ -17,9 +17,9 @@ function upgrade() {
     set -x
     helm upgrade --install -n ${ODA_NAMESPACE:?} oda-dda . \
         -f values-${ODA_SITE:-oda-prod}.yaml \
-        --set image.tag="$(cd dda; git describe --always)" \
-        --set securityContext.runAsUser=5182 \
-        --set securityContext.runAsGroup=4700
+        --set securityContext.runAsUser=20704598 \
+        --set securityContext.runAsGroup=20704598
+        #--set image.tag="$(cd dda; git describe --always)" \
         #--set securityContext.runAsGroup=4915
 }
 
