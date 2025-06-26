@@ -71,9 +71,6 @@ spec:
       - name: isilon-astro-integral
         persistentVolumeClaim:
           claimName: pvc-isilon-astro-integral{{ .Values.pv_suffix }}
-      - name: isilon-verso-integral
-        persistentVolumeClaim:
-          claimName: pvc-isilon-verso-integral{{ .Values.pv_suffix }}
     {{ else }}
       # these will be populated with archive since it is not mounted
       - name: isdc-arc-rev3
@@ -215,23 +212,23 @@ spec:
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/arc/rev_3
-            name: isilon-verso-integral
-            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/rep_base_prod
-            name: isilon-verso-integral
-            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /isdc/arc/rev_3
-            name: isilon-verso-integral
-            subPath: {{ .Values.isdc_verso.paths.rev_3 }}
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.rev_3 }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/rep_base_prod_nrt
-            name: isilon-verso-integral
-            subPath: {{ .Values.isdc_verso.paths.pvphase_nrt_ops }}
+            name: isilon-astro-integral
+            subPath: {{ .Values.isdc_astro.paths.pvphase_nrt_ops }}
           {{- include "archive_mount_options" . | nindent 12 }}
 
           - mountPath: /data/resources
