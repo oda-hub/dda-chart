@@ -1,4 +1,4 @@
-export ODA_NAMESPACE=${ODA_NAMESPACE:-oda-staging}
+export ODA_NAMESPACE=${ODA_NAMESPACE:-oda-production}
 
 function create-secrets(){
      set -x
@@ -16,11 +16,10 @@ function install() {
 function upgrade() {
     set -x
     helm upgrade --install -n ${ODA_NAMESPACE:?} oda-dda . \
-        -f values-${ODA_SITE}.yaml \
-        --set image.tag="$(cd dda; git describe --always)" 
-#        --set securityContext.runAsUser=5182 
-#        --set securityContext.runAsGroup=4700
-        #--set image.tag=6388fb4 \
+        -f values-${ODA_SITE:-oda-prod}.yaml \
+        --set securityContext.runAsUser=20704598 \
+        --set securityContext.runAsGroup=20704598
+        #--set image.tag="$(cd dda; git describe --always)" \
         #--set securityContext.runAsGroup=4915
 }
 

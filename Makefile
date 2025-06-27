@@ -1,3 +1,6 @@
+deploy-private:
+	ODA_NAMESPACE=oda-dda-private ODA_SITE=oda-private bash make.sh upgrade # || bash make.sh install
+
 deploy:
 	bash make.sh upgrade # || bash make.sh install
 
